@@ -63,7 +63,12 @@
 
         let rfb;
         let desktopName;
-
+        
+        async function getSession() {
+            const response = await fetch("/session");
+            const data = await response.json();
+            return data;
+        }
         // When this function is called we have
         // successfully connected to a server
         function connectedToServer(e) {
@@ -82,7 +87,7 @@
         // When this function is called, the server requires
         // credentials to authenticate
         function credentialsAreRequired(e) {
-            const password = prompt("Password Required:");
+            const password = "123456";
             rfb.sendCredentials({ password: password });
         }
 
@@ -132,13 +137,13 @@
             return defaultValue;
         }
 
-        document.getElementById('sendCtrlAltDelButton')
-            .onclick = sendCtrlAltDel;
-
         // Read parameters specified in the URL query string
         // By default, use the host and port of server that served this file
-        const host = readQueryVariable('host', window.location.hostname);
-        let port = readQueryVariable('port', window.location.port);
+        let session = await getSession();
+        const host = session.host;
+        const port = session.port;
+        console.log(host);
+        console.log(port);
         const password = readQueryVariable('password');
         const path = readQueryVariable('path', 'websockify');
 
