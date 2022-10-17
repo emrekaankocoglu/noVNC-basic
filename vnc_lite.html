@@ -22,7 +22,7 @@
 
         body {
             margin: 0;
-            background-color: dimgrey;
+            background-color: white;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -32,14 +32,16 @@
         }
 
         #top_bar {
-            background-color: #6e84a3;
+            background-color: white;
             color: white;
             font: bold 12px Helvetica;
             padding: 6px 5px 4px 5px;
             border-bottom: 1px outset;
+            visibility: hidden;
         }
         #status {
             text-align: center;
+            visibility: hidden;
         }
         #sendCtrlAltDelButton {
             position: fixed;
@@ -48,6 +50,7 @@
             border: 1px outset;
             padding: 5px 5px 4px 5px;
             cursor: pointer;
+            visibility: hidden;
         }
 
         #screen {
@@ -87,7 +90,7 @@
         // When this function is called, the server requires
         // credentials to authenticate
         function credentialsAreRequired(e) {
-            const password = "123456";
+            const password = "1236";
             rfb.sendCredentials({ password: password });
         }
 
@@ -179,11 +182,12 @@
         // Set parameters that can be changed on an active connection
         rfb.viewOnly = readQueryVariable('view_only', false);
         rfb.scaleViewport = readQueryVariable('scale', false);
+        rfb.resizeSession = 'remote';
     </script>
 </head>
 
 <body>
-    <div id="top_bar">
+    <div id="top_bar" visible="no">
         <div id="status">Loading</div>
         <div id="sendCtrlAltDelButton">Send CtrlAltDel</div>
     </div>
